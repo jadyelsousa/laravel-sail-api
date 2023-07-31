@@ -10,6 +10,4 @@ interface UserRepositoryInterface
     public function update($data, $id);  
     public function destroy($id); 
     public function findByCredentials($credentials);  
-
-
 }

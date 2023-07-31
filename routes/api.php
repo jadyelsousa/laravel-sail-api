@@ -1,9 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CityController;
+use App\Http\Controllers\DoctorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,19 +17,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::middleware('jwt')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login')->withoutMiddleware('jwt');
+    Route::get('/user', [AuthController::class, 'me'])->name('me');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
-Route::middleware('jwt')->prefix('user')->group(function () {
+Route::middleware('jwt')->prefix('users')->group(function () {
     Route::get('', [UserController::class, 'index']);
     Route::get('{id}', [UserController::class, 'show']);
     Route::post('store', [UserController::class, 'store'])->withoutMiddleware('jwt');
     Route::post('{id}', [UserController::class, 'update']);
     Route::delete('{id}', [UserController::class, 'destroy']);
 });
+
+Route::prefix('cidades')->group(function () {
+    Route::get('', [CityController::class, 'index']);
+    Route::get('{id}/medicos', [DoctorController::class, 'showByCity']);
+});
+
+Route::prefix('medicos')->group(function () {
+    Route::get('', [DoctorController::class, 'index']);
+    Route::post('', [DoctorController::class, 'store']);
+});
+
