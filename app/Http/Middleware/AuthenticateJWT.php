@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Http\Middleware\BaseMiddleware;
+use App\Traits\ApiResponseTrait;
 
 class AuthenticateJWT extends BaseMiddleware
 {
+    use ApiResponseTrait;
     /**
      * Handle an incoming request.
      *
@@ -21,14 +23,14 @@ class AuthenticateJWT extends BaseMiddleware
             $user = JWTAuth::parseToken()->authenticate();
         } catch (\Exception $e) {
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException) {
-                return response()->json(['message' => 'Invalid Token.'], 403);
+                return $this->errorResponse('Unauthorized', 'Invalid Token.', 403);
             } else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException) {
-                return response()->json(['message' => 'Expired Token.'], 401);
+                return $this->errorResponse('Unauthorized', 'Expired Token.', 401);
             } else {
-                return response()->json(['message' => 'Token not found.'], 401);
+                return $this->errorResponse('Unauthorized', 'Token not found.', 401);
             }
         }
-
+        
         $request->user = $user;
 
         return $next($request);
