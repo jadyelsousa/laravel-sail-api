@@ -9,5 +9,10 @@ class Paciente extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'nome',
+        'cpf',
+        'celular',    
+    ];
     public $timestamps = true;
 }

@@ -5,8 +5,8 @@ namespace App\Repositories\Contracts;
 interface DoctorRepositoryInterface
 {
     public function all();
-    public function showByCity($id);  
+    public function getDoctorsByCity($id);  
     public function store($data);  
-    public function update($data, $id);  
-    public function destroy($id);  
+    public function getPatientsByDoctor($id_medico);
+    public function linkDoctorWithPatient($request, $id_medico);  
 }

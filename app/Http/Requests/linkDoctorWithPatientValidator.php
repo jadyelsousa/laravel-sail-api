@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 
-class CreateDoctorValidator extends FormRequest
+class linkDoctorWithPatientValidator extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,8 @@ class CreateDoctorValidator extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required|string|max:100',
-            'especialidade' => 'required|string|max:100',
-            'cidade_id' => 'required|integer|exists:cidades,id',
+            'medico_id' => 'required|integer|exists:medicos,id',
+            'paciente_id' => 'required|integer|exists:pacientes,id',
         ];
     }
     

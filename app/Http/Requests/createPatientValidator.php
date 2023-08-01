@@ -5,8 +5,9 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\Rule;
 
-class CreateDoctorValidator extends FormRequest
+class createPatientValidator extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,11 +26,22 @@ class CreateDoctorValidator extends FormRequest
     {
         return [
             'nome' => 'required|string|max:100',
-            'especialidade' => 'required|string|max:100',
-            'cidade_id' => 'required|integer|exists:cidades,id',
+            'cpf' => [
+                'required',
+                'string',
+                'max:20',
+                'regex:/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/',
+                Rule::unique('pacientes')->ignore($this->id_paciente),
+            ],
+            'celular' => [
+                'required',
+                'string',
+                'max:20',
+                'regex:/^\(\d{2}\) \d \d{4}\-\d{4}$/'
+            ],
         ];
     }
-    
+
     public function failedValidation(Validator $validator)
     {
 

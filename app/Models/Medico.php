@@ -20,4 +20,10 @@ class Medico extends Model
     {
         return $this->belongsTo(Cidade::class);
     }
+
+    public function pacientes()
+    {
+        return $this->belongsToMany(Paciente::class, 'medico_paciente', 'medico_id', 'paciente_id')
+        ->withTimestamps();
+    }
 }
