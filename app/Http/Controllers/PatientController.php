@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\createPatientValidator;
+use App\Http\Requests\CreatePatientValidator;
 use App\Repositories\Contracts\PatientRepositoryInterface;
 use App\Traits\ApiResponseTrait;
 
@@ -37,7 +37,7 @@ class PatientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(createPatientValidator $request)
+    public function store(CreatePatientValidator $request)
     {
        try {
         $patient = $this->model->store($request->all());

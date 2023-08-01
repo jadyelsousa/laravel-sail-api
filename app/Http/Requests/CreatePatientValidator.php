@@ -41,7 +41,7 @@ class CreatePatientValidator extends FormRequest
             ],
         ];
     }
-    
+
     public function failedValidation(Validator $validator)
     {
 
